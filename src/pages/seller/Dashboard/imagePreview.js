@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip, Whisper } from 'rsuite';
-import { InputFile } from '../../components/elements/Input/InputFile';
+import { InputFile } from '../../../components/elements/Input/InputFile';
 import { FaInfoCircle, FaPlus, FaTimes } from 'react-icons/fa';
 
 const ImagePreview = ({ fileList, setFileList }) => {

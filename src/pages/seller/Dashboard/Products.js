@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FaFolder, FaPlus, FaEllipsisH } from 'react-icons/fa';
 import { SelectPicker, CheckPicker } from 'rsuite';
-import InputGroup from '../../components/elements/Input/InputGroup';
-import IconDropdown from '../../components/elements/IconDropDown';
-import { productInformation } from '../../components/SellerComponents/Info/Categories';
-import TextAreaGroup from '../../components/elements/Input/TextAreaGroup';
-import Folder2 from '../../assets/images/main/folder2.png';
+import InputGroup from '../../../components/elements/Input/InputGroup';
+import IconDropdown from '../../../components/elements/IconDropDown';
+import { productInformation } from '../../../components/SellerComponents/Info/Categories';
+import TextAreaGroup from '../../../components/elements/Input/TextAreaGroup';
+import Folder2 from '../../../assets/images/main/folder2.png';
 import ImagePreview from './imagePreview';
 
 //folders

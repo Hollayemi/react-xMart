@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardWrapper from '../../components/SellerComponents/Dashboard';
+import DashboardWrapper from '../../../components/SellerComponents/Dashboard';
 import Collections from './Collections';
 import Brand from './Brands';
 import Products from './Products';

@@ -10,7 +10,6 @@ import {
     FaSearch,
     FaTimes,
     FaDumpster,
-    FaUserNinja,
     FaRegUser,
     FaUserTag,
 } from 'react-icons/fa';

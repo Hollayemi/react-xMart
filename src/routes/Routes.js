@@ -13,8 +13,8 @@ const ErorrBoundary = LazyLoading(() =>
 const SignUp = LazyLoading(() => import('../pages/auth/signup/SignUp'));
 const SignIn = LazyLoading(() => import('../pages/auth/signin/Signin'));
 const Home = LazyLoading(() => import('../pages/website/Home'));
-const Seller = LazyLoading(() => import('../pages/website/Seller'));
-const Agent = LazyLoading(() => import('../pages/website/Agent'));
+const Seller = LazyLoading(() => import('../pages/seller'));
+const Agent = LazyLoading(() => import('../pages/Agent'));
 
 // sellerPage
 const CreateAccount = LazyLoading(() =>

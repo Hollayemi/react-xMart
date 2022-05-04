@@ -18,17 +18,17 @@ const Agent = () => {
                 <div className="intro-bg min-h-screen mt-20 md:-mt-20 relative overflow-hidden">
                     <div className="bg-slate-900 bg-opacity-75 absolute  flex flex-col md:flex-row justify-between md:justify-evenly items-center h-full w-full px-4">
                         <div className="w-full mx-3 sm:mx-0 sm:w-4/5 md:w-2/5 text-white mt-16">
-                            <h1 className="text-5xl font-bold text-white mb-5">
+                            <h1 className="text-5xl font-bold text-white mb-7">
                                 Earn As You Go
                             </h1>
-                            <h5>
+                            <h5 className="leading-9">
                                 You can earn up to ₦ 9500 in Kemon-Market for
                                 the businesses you reffered in a week to
                                 register. it's our way of appreciation for
                                 spreading the good words and increasing the
                                 businesses registered on Kemon.
                             </h5>
-                            <h5 className="mt-4">
+                            <h5 className="leading-9 mt-6">
                                 Kemon-market provides quick access to common
                                 features and commands. It is well organised,
                                 making it easy to locate different tools and

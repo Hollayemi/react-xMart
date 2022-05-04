@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { FaFolderOpen, FaFolder, FaPlus, FaEllipsisH } from 'react-icons/fa';
-import { Stack } from 'rsuite';
-import InputGroup from '../../components/elements/Input/InputGroup';
-import IconDropdown from '../../components/elements/IconDropDown';
-import { MartCategories } from '../../components/SellerComponents/Info/Categories';
-import TextAreaGroup from '../../components/elements/Input/TextAreaGroup';
+import { Stack, SelectPicker } from 'rsuite';
+import InputGroup from '../../../components/elements/Input/InputGroup';
+import IconDropdown from '../../../components/elements/IconDropDown';
+import {
+    MartCategories,
+    testingSearch,
+} from '../../../components/SellerComponents/Info/Categories';
+import TextAreaGroup from '../../../components/elements/Input/TextAreaGroup';
+import Folder2 from '../../../assets/images/main/folder2.png';
 
 //folders
 const Folders = ({ name, num }) => {
@@ -13,7 +17,7 @@ const Folders = ({ name, num }) => {
     return (
         <div className="flex justify-between items-center min-w-[200px] relative px-4 m-2  h-24 border rounded-xl bg-blue-100 shadow-md">
             <i className="text-6xl text-blue-500">
-                <FaFolder />
+                <img src={Folder2} alt="Brand" className="w-14" />
             </i>
             <i className="absolute top-2 right-2 w-6 h-3 bg-white rounded-full flex items-center justify-center text-xs text-slate-300 cursor-pointer">
                 <IconDropdown
@@ -29,19 +33,20 @@ const Folders = ({ name, num }) => {
             </i>
             <div className="flex flex-col justify-evenly mt-3 h-full">
                 <h5 className="font-bold">{name}</h5>
-                <p className="text-xs">{num} brand(s)</p>
+                <p className="text-xs">{num} products(s)</p>
             </div>
         </div>
     );
 };
 
-const Collections = () => {
+const Brand = () => {
     const [formData, setFormData] = useState({
         fullname: '',
         username: '',
         email: '',
     });
-    const [selectedCate, setCategory] = useState('');
+    const [selectedSub_Cate, setSub_Category] = useState('');
+    const [selectedCate, setCategory] = useState([]);
 
     let newValue = {};
     function updateValue(newVal, variable) {
@@ -58,17 +63,17 @@ const Collections = () => {
         });
         console.log(formData);
     }
-    console.log(selectedCate);
+    console.log(selectedSub_Cate);
     const AllCate = MartCategories.map((res, index) => {
         return (
             <p
                 key={index}
                 className={`h-10 px-3 rounded-lg shadow ${
-                    selectedCate === res
+                    selectedSub_Cate === res
                         ? ' bg-slate-300 text-slate-900 shadow-lg'
                         : 'bg-slate-600 text-slate-100'
                 } flex items-center cursor-pointer`}
-                onClick={() => setCategory(res)}
+                onClick={() => setSub_Category(res)}
             >
                 {res}
             </p>
@@ -88,7 +93,6 @@ const Collections = () => {
                         </h5>
                         <div className="flex flex-col justify-evenly h-full">
                             <h5 className="font-bold text-gray-200">New</h5>
-                            {/* <p className="text-xs">21 products</p> */}
                         </div>
                     </div>
                     <Folders name="Folder 1" num="1" />
@@ -105,7 +109,7 @@ const Collections = () => {
                         <div className="w-full flex items-center">
                             <div className="w-1/2 m-1">
                                 <InputGroup
-                                    label="Collection name"
+                                    label="Brand name"
                                     name="name"
                                     placeholder=" "
                                     required={true}
@@ -115,14 +119,30 @@ const Collections = () => {
                                 />
                             </div>
                             <div className="w-1/2 m-1">
-                                <InputGroup
-                                    label="Will you take order"
-                                    placeholder=" "
-                                    required={true}
-                                    onChange={(e) =>
-                                        updateValue(e.target.value, 'cate')
-                                    }
+                                <SelectPicker
+                                    data={selectedCate}
+                                    className="w-full bg-slate-100"
+                                    size="lg"
+                                    placeholder="Select Collection"
                                 />
+                            </div>
+                        </div>
+                        <div className="w-full flex items-center">
+                            <div className="w-1/2 m-1">
+                                <SelectPicker
+                                    data={selectedCate}
+                                    className="w-full bg-slate-100"
+                                    size="lg"
+                                    placeholder="Sub-category"
+                                />
+                            </div>
+                            <div className="w-1/2 m-1">
+                                {/* <SelectPicker
+                                    data={testingSearch}
+                                    className="w-full bg-slate-100"
+                                    size="lg"
+                                    placeholder="Select Collection"
+                                /> */}
                             </div>
                         </div>
                         <div className="w-full m-1">
@@ -159,4 +179,4 @@ const Collections = () => {
     );
 };
 
-export default Collections;
+export default Brand;

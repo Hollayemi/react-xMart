@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { FaFolderOpen, FaFolder, FaPlus, FaEllipsisH } from 'react-icons/fa';
-import { Stack, SelectPicker } from 'rsuite';
-import InputGroup from '../../components/elements/Input/InputGroup';
-import IconDropdown from '../../components/elements/IconDropDown';
-import {
-    MartCategories,
-    testingSearch,
-} from '../../components/SellerComponents/Info/Categories';
-import TextAreaGroup from '../../components/elements/Input/TextAreaGroup';
-import Folder2 from '../../assets/images/main/folder2.png';
+import { Stack } from 'rsuite';
+import InputGroup from '../../../components/elements/Input/InputGroup';
+import IconDropdown from '../../../components/elements/IconDropDown';
+import { MartCategories } from '../../../components/SellerComponents/Info/Categories';
+import TextAreaGroup from '../../../components/elements/Input/TextAreaGroup';
 
 //folders
 const Folders = ({ name, num }) => {
@@ -17,7 +13,7 @@ const Folders = ({ name, num }) => {
     return (
         <div className="flex justify-between items-center min-w-[200px] relative px-4 m-2  h-24 border rounded-xl bg-blue-100 shadow-md">
             <i className="text-6xl text-blue-500">
-                <img src={Folder2} alt="Brand" className="w-14" />
+                <FaFolder />
             </i>
             <i className="absolute top-2 right-2 w-6 h-3 bg-white rounded-full flex items-center justify-center text-xs text-slate-300 cursor-pointer">
                 <IconDropdown
@@ -33,20 +29,19 @@ const Folders = ({ name, num }) => {
             </i>
             <div className="flex flex-col justify-evenly mt-3 h-full">
                 <h5 className="font-bold">{name}</h5>
-                <p className="text-xs">{num} products(s)</p>
+                <p className="text-xs">{num} brand(s)</p>
             </div>
         </div>
     );
 };
 
-const Brand = () => {
+const Collections = () => {
     const [formData, setFormData] = useState({
         fullname: '',
         username: '',
         email: '',
     });
-    const [selectedSub_Cate, setSub_Category] = useState('');
-    const [selectedCate, setCategory] = useState([]);
+    const [selectedCate, setCategory] = useState('');
 
     let newValue = {};
     function updateValue(newVal, variable) {
@@ -63,17 +58,17 @@ const Brand = () => {
         });
         console.log(formData);
     }
-    console.log(selectedSub_Cate);
+    console.log(selectedCate);
     const AllCate = MartCategories.map((res, index) => {
         return (
             <p
                 key={index}
                 className={`h-10 px-3 rounded-lg shadow ${
-                    selectedSub_Cate === res
+                    selectedCate === res
                         ? ' bg-slate-300 text-slate-900 shadow-lg'
                         : 'bg-slate-600 text-slate-100'
                 } flex items-center cursor-pointer`}
-                onClick={() => setSub_Category(res)}
+                onClick={() => setCategory(res)}
             >
                 {res}
             </p>
@@ -93,6 +88,7 @@ const Brand = () => {
                         </h5>
                         <div className="flex flex-col justify-evenly h-full">
                             <h5 className="font-bold text-gray-200">New</h5>
+                            {/* <p className="text-xs">21 products</p> */}
                         </div>
                     </div>
                     <Folders name="Folder 1" num="1" />
@@ -105,44 +101,38 @@ const Brand = () => {
                     <Folders name="Folder 8" num="1" />
                 </div>
                 <div className=" px-5 flex justify-center items-center flex-col pt-5 w-full">
+                    <div className="my-4 w-4/5">
+                        <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1">
+                            Collection category
+                            <span className="text-red-600 dark:text-red-500">
+                                *
+                            </span>
+                        </label>
+                        <Stack wrap spacing={6}>
+                            {AllCate}
+                        </Stack>
+                    </div>
                     <div className="w-4/5">
                         <div className="w-full flex items-center">
                             <div className="w-1/2 m-1">
                                 <InputGroup
-                                    label="Brand name"
+                                    label="Collection name (optional)"
                                     name="name"
                                     placeholder=" "
-                                    required={true}
                                     onChange={(e) =>
                                         updateValue(e.target.value, 'name')
                                     }
                                 />
                             </div>
                             <div className="w-1/2 m-1">
-                                <SelectPicker
-                                    data={selectedCate}
-                                    className="w-full bg-slate-100"
-                                    size="lg"
-                                    placeholder="Select Collection"
+                                <InputGroup
+                                    label="Will you take order"
+                                    placeholder=" "
+                                    required={true}
+                                    onChange={(e) =>
+                                        updateValue(e.target.value, 'cate')
+                                    }
                                 />
-                            </div>
-                        </div>
-                        <div className="w-full flex items-center">
-                            <div className="w-1/2 m-1">
-                                <SelectPicker
-                                    data={selectedCate}
-                                    className="w-full bg-slate-100"
-                                    size="lg"
-                                    placeholder="Sub-category"
-                                />
-                            </div>
-                            <div className="w-1/2 m-1">
-                                {/* <SelectPicker
-                                    data={testingSearch}
-                                    className="w-full bg-slate-100"
-                                    size="lg"
-                                    placeholder="Select Collection"
-                                /> */}
                             </div>
                         </div>
                         <div className="w-full m-1">
@@ -156,18 +146,6 @@ const Brand = () => {
                             />
                         </div>
                     </div>
-
-                    <div className="mt-4 w-4/5">
-                        <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1">
-                            Collection category
-                            <span className="text-red-600 dark:text-red-500">
-                                *
-                            </span>
-                        </label>
-                        <Stack wrap spacing={6}>
-                            {AllCate}
-                        </Stack>
-                    </div>
                 </div>
                 <div className="flex justify-center mt-10 pb-20">
                     <button className="text-center w-[300px] h-10 rounded bg-slate-600 text-white font-bold text-md">
@@ -179,4 +157,4 @@ const Brand = () => {
     );
 };
 
-export default Brand;
+export default Collections;
