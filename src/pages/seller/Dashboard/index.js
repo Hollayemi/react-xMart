@@ -6,13 +6,15 @@ import Products from './Products';
 
 const Dashboard = () => {
     const [showing, setShowing] = useState('Products');
+    const myBreadcrumb = [
+        { name: 'Dashboard', link: '/' },
+        { name: showing, link: '/' },
+    ];
+
     return (
         <DashboardWrapper
             danger="mainly"
-            BreadcrumbList={[
-                { name: 'Dashboard', link: '/' },
-                { name: 'Overview', link: '/' },
-            ]}
+            BreadcrumbList={myBreadcrumb}
             setShowing={setShowing}
             shopName="Kemon-Mart"
         >

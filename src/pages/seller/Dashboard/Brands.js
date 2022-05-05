@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
-import { FaFolderOpen, FaFolder, FaPlus, FaEllipsisH } from 'react-icons/fa';
-import { Stack, SelectPicker } from 'rsuite';
+import { FaFolderOpen, FaPlus, FaEllipsisH } from 'react-icons/fa';
+import { SelectPicker } from 'rsuite';
 import InputGroup from '../../../components/elements/Input/InputGroup';
 import IconDropdown from '../../../components/elements/IconDropDown';
-import {
-    MartCategories,
-    testingSearch,
-} from '../../../components/SellerComponents/Info/Categories';
+import { MartCategories } from '../../../components/SellerComponents/Info/Categories';
 import TextAreaGroup from '../../../components/elements/Input/TextAreaGroup';
 import Folder2 from '../../../assets/images/main/folder2.png';
 
+import MartApi from '../../../state/api/baseApi';
 //folders
+const payload = {
+    Headers: {
+        token:
+            'Holla ' +
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaG9wSUQiOiI2MjcxMjM2MjRjNzYzNmQ3ODYzYzdlNzUiLCJpYXQiOjE2NTE2NjE5ODYsImV4cCI6MTY1MTg3Nzk4Nn0.0lYt-ppUKWEilPM4Yeu9VcpfzMNpDYsmzizEmeIpK4E',
+    },
+};
+
+const loginApi = async () => {
+    try {
+        const url =
+            '/view/627123624c7636d7863c7e75/brands/62725cb9cf8718ee5daba127';
+        const response = await MartApi.post(url, payload);
+        console.log(response);
+    } catch (error) {
+        throw error;
+    }
+};
+
 const Folders = ({ name, num }) => {
+    loginApi();
     const [eventFunc, setEventFunc] = useState('');
     console.log(eventFunc);
     return (
@@ -41,9 +59,10 @@ const Folders = ({ name, num }) => {
 
 const Brand = () => {
     const [formData, setFormData] = useState({
-        fullname: '',
-        username: '',
-        email: '',
+        brandName: '',
+        cate: '',
+        about: '',
+        refKey: '',
     });
     const [selectedSub_Cate, setSub_Category] = useState('');
     const [selectedCate, setCategory] = useState([]);
@@ -53,9 +72,10 @@ const Brand = () => {
         console.log('lol');
         // eslint-disable-next-line no-lone-blocks
 
-        variable === 'name' && (newValue = { fullname: newVal });
-        variable === 'cate' && (newValue = { username: newVal });
-        variable === 'about' && (newValue = { email: newVal });
+        variable === 'name' && (newValue = { brandName: newVal });
+        variable === 'cate' && (newValue = { cate: newVal });
+        variable === 'about' && (newValue = { about: newVal });
+        variable === 'refKey' && (newValue = { refKey: newVal });
 
         setFormData({
             ...formData,
@@ -82,7 +102,7 @@ const Brand = () => {
 
     return (
         <section className="relative mx-3">
-            <div className="w-[calc(100%-280px)]">
+            <div className="lg:w-[calc(100%-280px)]">
                 <div className="flex items-center h-40 relative overflow-x-auto w-full myScroll-x bg-slate-50 px-4 w-full border-4 border-slate-50">
                     <div className="flex justify-between items-center px-4 m-2 w-48 h-20 border min-w-[200px] rounded-lg bg-slate-50 shadow-sm">
                         <h5 className="text-gray-200 relative">
@@ -104,10 +124,10 @@ const Brand = () => {
                     <Folders name="Folder 7" num="1" />
                     <Folders name="Folder 8" num="1" />
                 </div>
-                <div className=" px-5 flex justify-center items-center flex-col pt-5 w-full">
-                    <div className="w-4/5">
-                        <div className="w-full flex items-center">
-                            <div className="w-1/2 m-1">
+                <div className=" px-5 flex justify-center md:items-center flex-col pt-5 w-full overflow-auto">
+                    <div className="w-full px-2 md:px-0 md:w-4/5 min-w-[280px]">
+                        <div className="w-full flex flex-col md:flex-row items-center">
+                            <div className="w-full sm:w-1/2 sm:m-1">
                                 <InputGroup
                                     label="Brand name"
                                     name="name"
@@ -118,7 +138,7 @@ const Brand = () => {
                                     }
                                 />
                             </div>
-                            <div className="w-1/2 m-1">
+                            <div className="w-full sm:w-1/2 m-1">
                                 <SelectPicker
                                     data={selectedCate}
                                     className="w-full bg-slate-100"
@@ -127,8 +147,8 @@ const Brand = () => {
                                 />
                             </div>
                         </div>
-                        <div className="w-full flex items-center">
-                            <div className="w-1/2 m-1">
+                        <div className="w-full flex mt-3 flex-col md:flex-row items-center">
+                            <div className="w-full sm:w-1/2 m-1">
                                 <SelectPicker
                                     data={selectedCate}
                                     className="w-full bg-slate-100"
@@ -136,13 +156,15 @@ const Brand = () => {
                                     placeholder="Sub-category"
                                 />
                             </div>
-                            <div className="w-1/2 m-1">
-                                {/* <SelectPicker
-                                    data={testingSearch}
-                                    className="w-full bg-slate-100"
-                                    size="lg"
-                                    placeholder="Select Collection"
-                                /> */}
+                            <div className="w-full sm:w-1/2 m-1">
+                                <InputGroup
+                                    label="Reference key (optional)"
+                                    name="refKey"
+                                    placeholder=" "
+                                    onChange={(e) =>
+                                        updateValue(e.target.value, 'refKey')
+                                    }
+                                />
                             </div>
                         </div>
                         <div className="w-full m-1">
@@ -157,21 +179,11 @@ const Brand = () => {
                         </div>
                     </div>
 
-                    <div className="mt-4 w-4/5">
-                        <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1">
-                            Collection category
-                            <span className="text-red-600 dark:text-red-500">
-                                *
-                            </span>
-                        </label>
-                        <Stack wrap spacing={6}>
-                            {AllCate}
-                        </Stack>
-                    </div>
+                    <div className="mt-4 w-4/5"></div>
                 </div>
                 <div className="flex justify-center mt-10 pb-20">
                     <button className="text-center w-[300px] h-10 rounded bg-slate-600 text-white font-bold text-md">
-                        Create Collection
+                        Create Brand
                     </button>
                 </div>
             </div>

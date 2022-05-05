@@ -77,7 +77,7 @@ const Collections = () => {
 
     return (
         <section className="relative mx-3">
-            <div className="w-[calc(100%-280px)]">
+            <div className="lg:w-[calc(100%-280px)]">
                 <div className="flex items-center h-40 relative overflow-x-auto w-full myScroll-x bg-slate-50 px-4 w-full border-4 border-slate-50">
                     <div className="flex justify-between items-center px-4 m-2 w-48 h-20 border min-w-[200px] rounded-lg bg-slate-50 shadow-sm">
                         <h5 className="text-gray-200 relative">
@@ -100,8 +100,8 @@ const Collections = () => {
                     <Folders name="Folder 7" num="1" />
                     <Folders name="Folder 8" num="1" />
                 </div>
-                <div className=" px-5 flex justify-center items-center flex-col pt-5 w-full">
-                    <div className="my-4 w-4/5">
+                <div className=" md:px-5 flex justify-center md:items-center flex-col pt-5 w-full overflow-auto">
+                    <div className="my-4 w-full min-w-[300px] md:w-4/5">
                         <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1">
                             Collection category
                             <span className="text-red-600 dark:text-red-500">
@@ -112,9 +112,9 @@ const Collections = () => {
                             {AllCate}
                         </Stack>
                     </div>
-                    <div className="w-4/5">
-                        <div className="w-full flex items-center">
-                            <div className="w-1/2 m-1">
+                    <div className="w-full md:w-4/5 min-w-[300px]">
+                        <div className="w-full flex flex-col md:flex-row items-center">
+                            <div className="px-2 w-full md:w-1/2 m-0.5 md:m-1">
                                 <InputGroup
                                     label="Collection name (optional)"
                                     name="name"
@@ -124,7 +124,7 @@ const Collections = () => {
                                     }
                                 />
                             </div>
-                            <div className="w-1/2 m-1">
+                            <div className="px-2 w-full md:w-1/2 m-0.5 md:m-1">
                                 <InputGroup
                                     label="Will you take order"
                                     placeholder=" "

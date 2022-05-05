@@ -80,7 +80,7 @@ const DashboardWrapper = ({ ...props }) => {
     return (
         <div className="show-fake-browser sidebar-page bg-slate-100">
             <Container>
-                <div className="rounded-r-3xl overflow-hidden bg-slate-900 fixed top-0">
+                <div className="rounded-r-3xl overflow-hidden h-[100%] bg-slate-900 fixed top-0">
                     <Sidebar
                         style={{ display: 'flex', flexDirection: 'column' }}
                         width={expand ? 260 : 56}
@@ -307,7 +307,7 @@ const DashboardWrapper = ({ ...props }) => {
                             <div className="w-full bg-slate-100">
                                 {props.children}
                             </div>
-                            <div className="fixed right-0 top-0 w-[280px] h-full  bg-slate-50 shadow-md">
+                            <div className="fixed -right-[280px] lg:right-0  top-0 w-[280px] h-full  bg-slate-50 shadow-md">
                                 <RecentInfo />
                             </div>
                         </Content>

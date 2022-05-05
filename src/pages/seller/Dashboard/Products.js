@@ -7,41 +7,10 @@ import { productInformation } from '../../../components/SellerComponents/Info/Ca
 import TextAreaGroup from '../../../components/elements/Input/TextAreaGroup';
 import Folder2 from '../../../assets/images/main/folder2.png';
 import ImagePreview from './imagePreview';
+import { fetchuser } from '../../../state/slices/auth/AuthSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 //folders
-const Folders = ({ name, num }) => {
-    const [eventFunc, setEventFunc] = useState('');
-    console.log(eventFunc);
-    return (
-        <div className="flex flex-col justify-btween min-w-[200px] relative px-4 m-2  h-32 border rounded-[50px] bg-blue-100 shadow-md">
-            <i className="text-6xl text-blue-500 m-2">
-                <img src={Folder2} alt="Brand" className="w-12" />
-            </i>
-            <i className="absolute top-5 right-7 w-6 h-3 bg-white rounded-full flex items-center justify-center text-xs text-slate-300 cursor-pointer">
-                <IconDropdown
-                    Icon={<FaEllipsisH />}
-                    Content={[
-                        { value: name + '-delete', name: 'Delete' },
-                        { value: name + '-edit', name: 'Edit' },
-                        { value: name + '-view', name: 'View' },
-                    ]}
-                    onSelect={(event) => setEventFunc(event)}
-                    className="w-20"
-                />
-            </i>
-            <div className="h-full">
-                <h5 className="font-bold text-md">{name}</h5>
-                <p
-                    className="text-xs absolute px-3 h-10 text-white rounded-full flex items-center justify-center 
-                            shadow-md shadow-slate-400 right-4 -bottom-3 bg-blue-500"
-                >
-                    ${num},450
-                </p>
-            </div>
-        </div>
-    );
-};
-
 const Product = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -74,13 +43,21 @@ const Product = () => {
             ...newValue,
         });
     }
-
+    const dispatch = useDispatch();
     const getInfo = () => {
+        const payload = {
+            Headers: {
+                token:
+                    'Holla ' +
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaG9wSUQiOiI2MjcxMjM2MjRjNzYzNmQ3ODYzYzdlNzUiLCJpYXQiOjE2NTE2NjE5ODYsImV4cCI6MTY1MTg3Nzk4Nn0.0lYt-ppUKWEilPM4Yeu9VcpfzMNpDYsmzizEmeIpK4E',
+            },
+        };
+        dispatch(fetchuser(payload));
         console.log(formData);
     };
     return (
         <section className="relative mx-3">
-            <div className="w-[calc(100%-280px)]">
+            <div className="lg:w-[calc(100%-280px)]">
                 <div className="flex items-center h-44 relative overflow-x-auto w-full myScroll-x bg-slate-50 px-4 w-full border-4 border-slate-50">
                     <div className="flex justify-between items-center px-4 m-2 w-48 h-20 border min-w-[200px] rounded-lg bg-slate-50 shadow-sm">
                         <h5 className="text-gray-200 relative">
@@ -103,10 +80,10 @@ const Product = () => {
                     <Folders name="Folder 7" num="2" />
                     <Folders name="Folder 8" num="3" />
                 </div>
-                <div className=" px-5 flex justify-center items-center flex-col pt-5 w-full">
-                    <div className="w-full px-5">
-                        <div className="w-full flex items-center">
-                            <div className="w-1/2 m-1">
+                <div className=" px-1 md:px-5 flex justify-center md:items-center flex-col pt-5 w-full overflow-auto">
+                    <div className="w-full px-0 md:px-5 min-w-[270px]">
+                        <div className="w-full flex-col sm:flex-row flex items-center">
+                            <div className="w-full sm:w-1/2 sm:m-1">
                                 <InputGroup
                                     label="Product Name"
                                     name="name"
@@ -117,7 +94,7 @@ const Product = () => {
                                     }
                                 />
                             </div>
-                            <div className="w-1/2 m-1">
+                            <div className="w-full sm:w-1/2 sm:m-1">
                                 <InputGroup
                                     label="Price"
                                     name="name"
@@ -128,7 +105,7 @@ const Product = () => {
                                     }
                                 />
                             </div>
-                            <div className="w-1/2 m-1">
+                            <div className="w-full sm:w-1/2 sm:m-1">
                                 <SelectPicker
                                     data={productInformation.weight}
                                     className="w-full bg-slate-100"
@@ -140,16 +117,16 @@ const Product = () => {
                                 />
                             </div>
                         </div>
-                        <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1">
+                        <label className="block text-sm font-bold mt-7 text-slate-700 tracking-wider mb-1">
                             Product Specifications
                             <span className="text-red-600 dark:text-red-500">
                                 *
                             </span>
                         </label>
-                        <div className="flex flex-wrap justify-center">
+                        <div className="flex flex-wrap w-full justify-center">
                             <SelectPicker
                                 data={productInformation.weight}
-                                className="w-1/5 min-w-[200px] m-2 bg-slate-100"
+                                className=" w-full sm:w-1/5 min-w-[200px] m-1 md:m-2 bg-slate-100"
                                 size="lg"
                                 placeholder="Weight"
                                 onChange={(value) =>
@@ -158,14 +135,14 @@ const Product = () => {
                             />
                             <SelectPicker
                                 data={productInformation.unit}
-                                className="w-1/5 min-w-[200px] m-2 bg-slate-100"
+                                className=" w-full sm:w-1/5 min-w-[200px] m-1 md:m-2 bg-slate-100"
                                 size="lg"
                                 placeholder="Unit"
                                 onChange={(value) => updateValue(value, 'unit')}
                             />
                             <SelectPicker
                                 data={productInformation.gender}
-                                className="w-1/5 min-w-[200px] m-2 bg-slate-100"
+                                className=" w-full sm:w-1/5 min-w-[200px] m-1 md:m-2 bg-slate-100"
                                 size="lg"
                                 placeholder="Gender"
                                 onChange={(value) =>
@@ -175,7 +152,7 @@ const Product = () => {
                             <CheckPicker
                                 data={productInformation.color}
                                 placeholder="Available colors"
-                                className="w-1/5 min-w-[200px] m-2 bg-slate-100"
+                                className=" w-full sm:w-1/5 min-w-[200px] m-1 md:m-2 bg-slate-100"
                                 size="lg"
                                 onChange={(value) =>
                                     updateValue(value, 'color')
@@ -183,7 +160,7 @@ const Product = () => {
                             />
                             <SelectPicker
                                 data={productInformation.size}
-                                className="w-1/5 min-w-[200px] m-2 bg-slate-100"
+                                className=" w-full sm:w-1/5 min-w-[200px] m-1 md:m-2 bg-slate-100"
                                 size="lg"
                                 placeholder="Size"
                                 onChange={(value) => updateValue(value, 'size')}
@@ -199,12 +176,6 @@ const Product = () => {
                                 }
                             />
                         </div>
-                        <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1 mt-5">
-                            Add Custom Variation
-                            <span className="text-red-600 dark:text-red-500">
-                                *
-                            </span>
-                        </label>
                         <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1">
                             Add Images
                             <span className="text-red-600 dark:text-red-500">
@@ -217,21 +188,14 @@ const Product = () => {
                         />
                     </div>
 
-                    <div className="mt-4 w-4/5">
-                        <label className="block text-sm font-bold text-slate-700 tracking-wider mb-1">
-                            Collection category
-                            <span className="text-red-600 dark:text-red-500">
-                                *
-                            </span>
-                        </label>
-                    </div>
+                    <div className="mt-4 w-4/5"></div>
                 </div>
                 <div className="flex justify-center mt-10 pb-20">
                     <button
                         onClick={getInfo}
                         className="text-center w-[300px] h-10 rounded bg-slate-600 text-white font-bold text-md"
                     >
-                        Create Collection
+                        Create Product
                     </button>
                 </div>
             </div>
@@ -240,3 +204,36 @@ const Product = () => {
 };
 
 export default Product;
+
+const Folders = ({ name, num }) => {
+    const [eventFunc, setEventFunc] = useState('');
+    console.log(eventFunc);
+    return (
+        <div className="flex flex-col justify-btween min-w-[200px] relative px-4 m-2  h-32 border rounded-[50px] bg-blue-100 shadow-md">
+            <i className="text-6xl text-blue-500 m-2">
+                <img src={Folder2} alt="Brand" className="w-12" />
+            </i>
+            <i className="absolute top-5 right-7 w-6 h-3 bg-white rounded-full flex items-center justify-center text-xs text-slate-300 cursor-pointer">
+                <IconDropdown
+                    Icon={<FaEllipsisH />}
+                    Content={[
+                        { value: name + '-delete', name: 'Delete' },
+                        { value: name + '-edit', name: 'Edit' },
+                        { value: name + '-view', name: 'View' },
+                    ]}
+                    onSelect={(event) => setEventFunc(event)}
+                    className="w-20"
+                />
+            </i>
+            <div className="h-full">
+                <h5 className="font-bold text-md">{name}</h5>
+                <p
+                    className="text-xs absolute px-3 h-10 text-white rounded-full flex items-center justify-center 
+                            shadow-md shadow-slate-400 right-4 -bottom-3 bg-blue-500"
+                >
+                    ${num},450
+                </p>
+            </div>
+        </div>
+    );
+};
