@@ -5,17 +5,19 @@ import InputAddon from '../../../components/elements/Input/InputAddon';
 import { FaEye, FaEyeSlash, FaFacebook, FaGoogle } from 'react-icons/fa';
 import HelperText from '../../../components/elements/Input/HelperText';
 import Button from '../../../components/elements/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DividerPanel from '../../../components/elements/DividerPanel';
+import { useDispatch, useSelector } from 'react-redux';
+import { kem_signin, sendUserAuth } from '../../../state/slices/auth/Login';
+import { REQUEST_STATUS } from '../../../state/slices/constants';
 
+//
 const KemSignUp = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
-
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
     let newValue = {};
     const updateValue = (newVal, variable) => {
         // eslint-disable-next-line no-lone-blocks
@@ -29,9 +31,25 @@ const KemSignUp = () => {
         });
         console.log(formData);
     };
+
+    //
+    //
+    //
+    const { loading, userData, status, wasGoing } = useSelector(
+        (state) => state.reducer.loginReducer
+    );
+    console.log(userData);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    if (status === REQUEST_STATUS.FULFILLED) {
+        if (wasGoing !== 'no-where') {
+            navigate(`/${wasGoing}`);
+        } else {
+            navigate('/');
+        }
+    }
     const loginHandler = () => {
-        // const myEmail = ;
-        // console.log(myEmail);
+        dispatch(kem_signin(formData));
     };
     return (
         <section className="h-80 min-h-screen overflow-x-hidden">

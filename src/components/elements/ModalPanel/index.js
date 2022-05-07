@@ -8,6 +8,7 @@ const ModalPanel = ({
     title,
     hasBackdrop,
     keyboard,
+    buttonName,
     size,
     overflow,
     closeButton,
@@ -42,7 +43,7 @@ const ModalPanel = ({
                     appearance="primary"
                     className="bg-blue-400"
                 >
-                    Nice!
+                    {buttonName}
                 </Button>
                 {/* <Button onClick={handleClose} appearance="subtle">
                     Cancel

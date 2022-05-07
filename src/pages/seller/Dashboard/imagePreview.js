@@ -4,7 +4,6 @@ import { InputFile } from '../../../components/elements/Input/InputFile';
 import { FaInfoCircle, FaPlus, FaTimes } from 'react-icons/fa';
 
 const ImagePreview = ({ fileList, setFileList }) => {
-    console.log(typeof fileList);
     const imageHandler = (e) => {
         let preImg = null;
         let exactType = e.target.files[0].type.split('/');
@@ -37,7 +36,6 @@ const ImagePreview = ({ fileList, setFileList }) => {
             );
         });
     }
-    console.log(fileList);
     return (
         <>
             <div className="w-48 flex items-center m-1">

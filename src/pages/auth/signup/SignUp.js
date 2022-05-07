@@ -1,38 +1,35 @@
 import React, { useState } from 'react';
-import { Steps, Panel } from 'rsuite';
-import { FaUser, FaPlus, FaAngleRight, FaAngleLeft } from 'react-icons/fa';
+import { Steps, Panel, Loader } from 'rsuite';
+import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
 import InputGroup from '../../../components/elements/Input/InputGroup';
 import Button from '../../../components/elements/Button/index';
-import {
-    InputFile,
-    InputRadio,
-} from '../../../components/elements/Input/InputFile';
-import DividerPanel from '../../../components/elements/DividerPanel';
+import { InputRadio } from '../../../components/elements/Input/InputFile';
 import { Link } from 'react-router-dom';
 import UploadProfilePic from '../../../components/websiteCompoents/UploadFile/uploadProfilePic';
+import { useDispatch, useSelector } from 'react-redux';
+import { RegNewUser, sendUserAuth } from '../../../state/slices/auth/Signup';
+import { REQUEST_STATUS } from '../../../state/slices/constants';
 
 const KemSignUp = () => {
     const [formData, setFormData] = useState({
         fullname: '',
         username: '',
         email: '',
-        phone: '',
+        phoneNumber: '',
         location: '',
         password: '',
         conf_pass: '',
-        avatar: '',
+        avatar: 'no image',
         why_here: '',
     });
-
     let newValue = {};
     function updateValue(newVal, variable) {
-        console.log('lol');
         // eslint-disable-next-line no-lone-blocks
         {
             variable === 'fullname' && (newValue = { fullname: newVal });
             variable === 'username' && (newValue = { username: newVal });
             variable === 'email' && (newValue = { email: newVal });
-            variable === 'phone' && (newValue = { phone: newVal });
+            variable === 'phone' && (newValue = { phoneNumber: newVal });
             variable === 'location' && (newValue = { location: newVal });
             variable === 'password' && (newValue = { password: newVal });
             variable === 'conf_pass' && (newValue = { conf_pass: newVal });
@@ -43,23 +40,29 @@ const KemSignUp = () => {
             ...formData,
             ...newValue,
         });
-        console.log(formData);
     }
     const [step, setStep] = useState(0);
     const [agreedToTerms, setAgreedToTerms] = useState(false);
 
     // functions
-
     const onChange = (nextStep) => {
         setStep(nextStep < 0 ? 0 : nextStep > 3 ? 3 : nextStep);
     };
     const onNext = () => onChange(step + 1);
     const onPrevious = () => onChange(step - 1);
+    //
+    //
+    //
+    const fetchInfo = useSelector(sendUserAuth);
+    const dispatch = useDispatch();
     const submitButton = () => {
-        const fullName = document.getElementById('fullName');
-        console.log(fullName);
+        console.log(fetchInfo);
+        if (formData.password === formData.conf_pass) {
+            const { conf_pass, ...others } = formData;
+            console.log(others);
+            dispatch(RegNewUser({ ...others, isSeller: false }));
+        }
     };
-    console.log(formData.avatar);
     return (
         <section className="h-80 min-h-screen overflow-x-hidden">
             <div className="w-full h-full flex">
@@ -111,6 +114,7 @@ const KemSignUp = () => {
                                                 label="Name"
                                                 name="fullName"
                                                 placeholder=" "
+                                                value={formData.fullname}
                                                 required={true}
                                                 onChange={(e) =>
                                                     updateValue(
@@ -125,6 +129,15 @@ const KemSignUp = () => {
                                                 label="Username"
                                                 placeholder=" "
                                                 required={true}
+                                                value={formData.username}
+                                                tooltip={
+                                                    <ul className="p-1">
+                                                        <li>
+                                                            Minimum of 6
+                                                            characters
+                                                        </li>
+                                                    </ul>
+                                                }
                                                 onChange={(e) =>
                                                     updateValue(
                                                         e.target.value,
@@ -140,6 +153,7 @@ const KemSignUp = () => {
                                                 label="Email"
                                                 placeholder=" "
                                                 required={true}
+                                                value={formData.email}
                                                 onChange={(e) =>
                                                     updateValue(
                                                         e.target.value,
@@ -153,11 +167,22 @@ const KemSignUp = () => {
                                                 label="Phone number"
                                                 placeholder=" "
                                                 required={true}
+                                                type="number"
+                                                max={11}
+                                                value={formData.phoneNumber}
                                                 onChange={(e) =>
                                                     updateValue(
                                                         e.target.value,
                                                         'phone'
                                                     )
+                                                }
+                                                tooltip={
+                                                    <ul className="p-1">
+                                                        <li>
+                                                            Maximum of 11
+                                                            characters
+                                                        </li>
+                                                    </ul>
                                                 }
                                             />
                                         </div>
@@ -165,6 +190,7 @@ const KemSignUp = () => {
                                     <InputGroup
                                         label="Location"
                                         placeholder=" "
+                                        value={formData.location}
                                         onChange={(e) =>
                                             updateValue(
                                                 e.target.value,
@@ -181,23 +207,35 @@ const KemSignUp = () => {
                                         type="password"
                                         placeholder=" "
                                         required={true}
+                                        value={formData.password}
                                         onChange={(e) =>
                                             updateValue(
                                                 e.target.value,
                                                 'password'
                                             )
                                         }
+                                        tooltip={
+                                            <ul className="p-1">
+                                                <li>Minimum of 6 characters</li>
+                                            </ul>
+                                        }
                                     />
                                     <InputGroup
                                         label="Confirm Password"
                                         type="password"
                                         placeholder=" "
+                                        value={formData.conf_pass}
                                         required={true}
                                         onChange={(e) =>
                                             updateValue(
                                                 e.target.value,
                                                 'conf_pass'
                                             )
+                                        }
+                                        tooltip={
+                                            <ul className="p-1">
+                                                <li>Minimum of 6 characters</li>
+                                            </ul>
                                         }
                                     />
                                 </div>
@@ -242,6 +280,7 @@ const KemSignUp = () => {
                                             type="checkbox"
                                             name="agreeToPrivacy"
                                             id="agreeToPrivacy"
+                                            checked={agreedToTerms}
                                             onChange={() =>
                                                 setAgreedToTerms(!agreedToTerms)
                                             }
@@ -275,6 +314,15 @@ const KemSignUp = () => {
                     </div>
                 </div>
             </div>
+            {fetchInfo.status === REQUEST_STATUS.PENDING && (
+                <Loader
+                    backdrop
+                    speed="fast"
+                    content="In few seconds..."
+                    vertical
+                />
+            )}
+            ;
         </section>
     );
 };

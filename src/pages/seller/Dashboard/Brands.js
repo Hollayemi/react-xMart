@@ -7,29 +7,9 @@ import { MartCategories } from '../../../components/SellerComponents/Info/Catego
 import TextAreaGroup from '../../../components/elements/Input/TextAreaGroup';
 import Folder2 from '../../../assets/images/main/folder2.png';
 
-import MartApi from '../../../state/api/baseApi';
 //folders
-const payload = {
-    Headers: {
-        token:
-            'Holla ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaG9wSUQiOiI2MjcxMjM2MjRjNzYzNmQ3ODYzYzdlNzUiLCJpYXQiOjE2NTE2NjE5ODYsImV4cCI6MTY1MTg3Nzk4Nn0.0lYt-ppUKWEilPM4Yeu9VcpfzMNpDYsmzizEmeIpK4E',
-    },
-};
-
-const loginApi = async () => {
-    try {
-        const url =
-            '/view/627123624c7636d7863c7e75/brands/62725cb9cf8718ee5daba127';
-        const response = await MartApi.post(url, payload);
-        console.log(response);
-    } catch (error) {
-        throw error;
-    }
-};
 
 const Folders = ({ name, num }) => {
-    loginApi();
     const [eventFunc, setEventFunc] = useState('');
     console.log(eventFunc);
     return (

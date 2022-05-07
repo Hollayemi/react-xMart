@@ -2,8 +2,7 @@ import { useRoutes } from 'react-router-dom';
 import LazyLoading from '../components/LazyLoading';
 
 const NotFound = LazyLoading(() => import('../pages/NotFound'));
-const Signin = LazyLoading(() => import('../pages/auth/signin/Signin'));
-// const AuthOutlet = LazyLoading(() => import('../components/hoc/AuthOutlet'));
+const AuthOutlet = LazyLoading(() => import('../components/HOC/AuthOutlet'));
 
 const ErorrBoundary = LazyLoading(() =>
     import('../components/HOC/ErrorBoundary')
@@ -31,8 +30,6 @@ const AppRoutes = () => {
             children: [
                 { element: <Home />, index: true },
                 { path: '/signin', element: <SignIn /> },
-                { path: '/seller', element: <Seller /> },
-                { path: '/agent', element: <Agent /> },
                 {
                     path: '/signup',
                     element: <SignUp />,
@@ -42,7 +39,9 @@ const AppRoutes = () => {
         },
         {
             path: '/seller',
+            element: <AuthOutlet to="seller" />,
             children: [
+                { element: <Seller />, index: true },
                 {
                     path: '/seller/create-account/:level',
                     element: <CreateAccount />,
@@ -55,7 +54,9 @@ const AppRoutes = () => {
         },
         {
             path: '/agent',
+            element: <AuthOutlet to="agent" />,
             children: [
+                { element: <Agent />, index: true },
                 {
                     path: '/agent/new-agent',
                     element: <NewAgent />,

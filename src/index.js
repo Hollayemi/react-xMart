@@ -10,12 +10,17 @@ import './assets/css/tailwind.css';
 import ErrorBoundary from './components/HOC/ErrorBoundary';
 import KickOff from './routes';
 import { store } from './state/store';
+import persistStore from 'redux-persist/es/persistStore';
+import { PersistGate } from 'redux-persist/integration/react';
 
+let persistor = persistStore(store);
 ReactDOM.render(
     <React.StrictMode>
         <ErrorBoundary>
             <Provider store={store}>
-                <KickOff />
+                <PersistGate loading={null} persistor={persistor}>
+                    <KickOff />
+                </PersistGate>
             </Provider>
         </ErrorBoundary>
     </React.StrictMode>,

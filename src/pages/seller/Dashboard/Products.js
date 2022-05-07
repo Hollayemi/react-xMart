@@ -6,12 +6,15 @@ import IconDropdown from '../../../components/elements/IconDropDown';
 import { productInformation } from '../../../components/SellerComponents/Info/Categories';
 import TextAreaGroup from '../../../components/elements/Input/TextAreaGroup';
 import Folder2 from '../../../assets/images/main/folder2.png';
+import otpPic from '../../../assets/images/png/otp.png';
 import ImagePreview from './imagePreview';
-import { fetchuser } from '../../../state/slices/auth/AuthSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import ModalPanel from '../../../components/elements/ModalPanel';
+import MyOtpModal from '../../../components/elements/OtpVerification';
 
 //folders
 const Product = () => {
+    const [agreedToTerms, setAgreedToTerms] = useState(true);
+
     const [formData, setFormData] = useState({
         name: '',
         price: '',
@@ -43,17 +46,8 @@ const Product = () => {
             ...newValue,
         });
     }
-    const dispatch = useDispatch();
     const getInfo = () => {
-        const payload = {
-            Headers: {
-                token:
-                    'Holla ' +
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaG9wSUQiOiI2MjcxMjM2MjRjNzYzNmQ3ODYzYzdlNzUiLCJpYXQiOjE2NTE2NjE5ODYsImV4cCI6MTY1MTg3Nzk4Nn0.0lYt-ppUKWEilPM4Yeu9VcpfzMNpDYsmzizEmeIpK4E',
-            },
-        };
-        dispatch(fetchuser(payload));
-        console.log(formData);
+        //
     };
     return (
         <section className="relative mx-3">
@@ -199,10 +193,26 @@ const Product = () => {
                     </button>
                 </div>
             </div>
+            <ModalPanel
+                title="Dashboard Authorization"
+                children={
+                    <MyOtpModal
+                        otpPic={otpPic}
+                        title="Enter verification code"
+                        note="we have just a verification code to
+                        staphanyemmitty@gmail.com, it expires in 1hour"
+                    />
+                }
+                hasBackdrop={true}
+                keyboard={true}
+                open={agreedToTerms}
+                buttonName="Varify Code"
+                handleClose={() => setAgreedToTerms(!agreedToTerms)}
+            />
+            ;
         </section>
     );
 };
-
 export default Product;
 
 const Folders = ({ name, num }) => {

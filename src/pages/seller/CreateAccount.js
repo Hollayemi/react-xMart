@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Steps, Panel } from 'rsuite';
 import Button from '../../components/elements/Button';
 import InputGroup from '../../components/elements/Input/InputGroup';
@@ -9,6 +9,18 @@ import ProfiePreview, {
 import { FaAngleLeft } from 'react-icons/fa';
 import UploadProfilePic from '../../components/websiteCompoents/UploadFile/uploadProfilePic';
 import ModalPanel from '../../components/elements/ModalPanel';
+//stateManagement
+import { addNewShop, otpHandler } from '../../state/slices/shop/shopApis';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendUserAuth } from '../../state/slices/auth/Signup';
+import { shopInfo } from '../../state/slices/shop/shopSlices';
+import DisplayInfo from '../../components/elements/Notification';
+
+//
+//
+
+//
+//
 
 export const FieldAdded = ({ title, value }) => {
     return (
@@ -17,6 +29,7 @@ export const FieldAdded = ({ title, value }) => {
         </h5>
     );
 };
+
 const NewPage = () => {
     let { level } = useParams();
     let levele = '';
@@ -36,7 +49,7 @@ const NewPage = () => {
         buzz_state: '',
         buzz_landmark: '',
         buzz_cate: '',
-        accept_order: '',
+        accept_order: true,
     });
     const [Category, setCategory] = useState([]);
     const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -72,30 +85,43 @@ const NewPage = () => {
         });
     };
 
+    //
+    //
+    //
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const getUserInfo = useSelector(sendUserAuth);
+    const getshopInfo = useSelector(shopInfo);
+    //
+    console.log(getshopInfo);
+    const { err, _id, veriOtp } = getshopInfo.shopAuth.data;
     const submitButton = () => {
-        const fullName = document.getElementById('fullName');
-        console.log(fullName);
+        dispatch(
+            addNewShop({
+                ...formData,
+                id: getUserInfo.loginAuth.data._id,
+                isSelle: true,
+                buzz_cate: Category,
+            })
+        );
     };
+    if (!veriOtp) {
+        dispatch(otpHandler(_id));
+    }
+    if (veriOtp) {
+        navigate('/seller/dashboard');
+    }
+    //
+    //
+    //
     const [step, setStep] = useState(0);
     const onChange = (nextStep) => {
         setStep(nextStep < 0 ? 0 : nextStep > 3 ? 3 : nextStep);
     };
-
     return (
         <section className="seller-bg-image min-h-screen">
             <div className="flex justify-evenly items-center w-full h-full bg-slate-900 bg-opacity-75  absolute top-0 left-0">
                 <div className="flex md:w-full lg:w-5/6 justify-center">
-                    {/* <div className="hidden md:block mx-4 flex justify-center items-center h-full relative bg-slate-900 bg-opacity-75 z-50">
-                        <div className="w-[350px] rounded-sm">
-                            <h5 className="w-full h-12 bg-slate-900 flex items-center border-b-2 border-blue-500 pl-3 text-white font-semibold rounded-t-md">
-                                Your Profile Preview
-                            </h5>
-                            <ProfiePreview
-                                formData={formData}
-                                Category={Category}
-                            />
-                        </div>
-                    </div> */}
                     <div className="block md:hidden">
                         <ModalPanel
                             title="Your Profile Preview"
@@ -109,6 +135,7 @@ const NewPage = () => {
                             keyboard={true}
                             open={agreedToTerms}
                             closeButton={true}
+                            buttonName="Nice!"
                             handleClose={setCloseModal}
                         />
                     </div>
@@ -312,15 +339,14 @@ const NewPage = () => {
                                                     )
                                                 }
                                             />
-                                            <Link to="/#">
-                                                <label
-                                                    htmlFor="agreeToPrivacy"
-                                                    className="px-2"
-                                                >
-                                                    I agree to the Terms both
-                                                    Privacy Policy
-                                                </label>
-                                            </Link>
+
+                                            <label
+                                                htmlFor="agreeToPrivacy"
+                                                className="px-2"
+                                            >
+                                                I agree to the Terms both
+                                                Privacy Policy
+                                            </label>
                                         </div>
                                         <Button
                                             btnClass="h-10 rounded mt-4 w-full justify-center"

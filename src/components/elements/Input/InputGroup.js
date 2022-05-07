@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip, Whisper } from 'rsuite';
 
 /**
  * @param  {} {icon
@@ -12,6 +13,7 @@ import React from 'react';
  * @param  {} onFocus
  * @param  {} error
  * @param  {} border
+ * @param  {} tooltip
  * @param  {} }
  */
 
@@ -29,8 +31,17 @@ const InputGroup = ({
     size,
     status,
     border,
+    tooltip,
+    min,
     ...props
 }) => {
+    const tooltipMessage = <Tooltip>{tooltip && tooltip}</Tooltip>;
+    let pos = null;
+    if (tooltip) {
+        if (value.length < 6) {
+            pos = 'top';
+        }
+    }
     return (
         <div className="mb-6">
             <label
@@ -67,20 +78,27 @@ const InputGroup = ({
                     </div>
                 </>
             ) : (
-                <input
-                    id={name}
-                    type={type || 'text'}
-                    className={`${size === 'sm' && 'p-2'}  ${
-                        (size === 'lg' && 'p-4') || 'p-2.5'
-                    } bg-slate-50 border border-gray-300 text-gray-600 placeholder-text-xs text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 shadow-sm`}
-                    onChange={onChange}
-                    onFocus={onFocus}
-                    name={name}
-                    value={value}
-                    placeholder={placeholder || 'Input Placeholder'}
-                    required={required || false}
-                    {...props}
-                />
+                <Whisper
+                    placement={pos}
+                    controlId="control-id-click"
+                    trigger="click"
+                    speaker={tooltipMessage}
+                >
+                    <input
+                        id={name}
+                        type={type || 'text'}
+                        className={`${size === 'sm' && 'p-2'}  ${
+                            (size === 'lg' && 'p-4') || 'p-2.5'
+                        } bg-slate-50 border border-gray-300 text-gray-600 placeholder-text-xs text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 shadow-sm`}
+                        onChange={onChange}
+                        onFocus={onFocus}
+                        name={name}
+                        value={value}
+                        placeholder={placeholder || 'Input Placeholder'}
+                        required={required || false}
+                        {...props}
+                    />
+                </Whisper>
             )}
 
             {error && (

@@ -24,10 +24,10 @@ export const BigHeader = ({ top, raise, sideBarState }) => {
             className={`container-fluid fixed top-0 z-50 w-full top-0 bg-slae-600 shadow-sm h-24 bg-white`}
         >
             <div className="flex justify-end px-4 items-center h-8">
-                <Link to="/">
+                <Link to="/seller">
                     <h5 className="mx-2">Sell on Kemon</h5>
                 </Link>
-                <Link to="/">
+                <Link to="/agent">
                     <h5 className="mx-2">Earn on Kemon</h5>
                 </Link>
             </div>
@@ -171,7 +171,7 @@ export const SmallHeader = () => {
                     </i>
                 </div>
                 <div className="flex justify-end px-4 items-center h-6">
-                    <Link to="/">
+                    <Link to="/seller">
                         <h5 className="mx-2">Sell on Kemon</h5>
                     </Link>
                     <Link to="/agent">
